@@ -88,6 +88,31 @@ CREATE TABLE tx_dadapi_domain_model_wegpunkt (
 );
 
 --
+-- Table structure for eyewitness stories (Zeitzeugen)
+--
+CREATE TABLE tx_dadapi_domain_model_zeitzeug (
+    uid INT(11) NOT NULL AUTO_INCREMENT,
+    pid INT(11) NOT NULL DEFAULT 0,
+    tstamp INT(11) NOT NULL DEFAULT 0,
+    crdate INT(11) NOT NULL DEFAULT 0,
+    deleted TINYINT(1) NOT NULL DEFAULT 0,
+    hidden TINYINT(1) NOT NULL DEFAULT 0,
+
+    title VARCHAR(255) NOT NULL DEFAULT '',
+    author_name VARCHAR(255) DEFAULT '',
+    ort_uid INT(11) NOT NULL DEFAULT 0,
+    teaser TEXT,
+    body_html MEDIUMTEXT,
+    period VARCHAR(100) DEFAULT '',
+    thumbnail INT(11) NOT NULL DEFAULT 0,
+    published_at INT(11) NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (uid),
+    KEY parent (pid),
+    KEY ort (ort_uid)
+);
+
+--
 -- Table structure for user-submitted photos
 --
 CREATE TABLE tx_dadapi_domain_model_userfoto (

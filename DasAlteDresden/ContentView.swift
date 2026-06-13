@@ -13,6 +13,12 @@ struct ContentView: View {
 
             KarteView()
                 .tabItem { Label("Karte", systemImage: "map") }
+
+            SpaziergangListView()
+                .tabItem { Label("Spaziergänge", systemImage: "figure.walk") }
+
+            MitmachenView()
+                .tabItem { Label("Mitmachen", systemImage: "plus.circle") }
         }
         .tint(Color.appSepia)
     }

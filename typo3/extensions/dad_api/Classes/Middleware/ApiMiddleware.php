@@ -7,6 +7,8 @@ use DadApi\Handler\LexikonHandler;
 use DadApi\Handler\KalenderHandler;
 use DadApi\Handler\OrteHandler;
 use DadApi\Handler\DannUndJetztHandler;
+use DadApi\Handler\SpaziergangHandler;
+use DadApi\Handler\ZeitzeugHandler;
 use DadApi\Handler\FotoHandler;
 use DadApi\Handler\AuthHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -29,6 +31,8 @@ final class ApiMiddleware implements MiddlewareInterface
         private readonly KalenderHandler $kalenderHandler,
         private readonly OrteHandler $orteHandler,
         private readonly DannUndJetztHandler $dannUndJetztHandler,
+        private readonly SpaziergangHandler $spaziergangHandler,
+        private readonly ZeitzeugHandler $zeitzeugHandler,
         private readonly FotoHandler $fotoHandler,
         private readonly AuthHandler $authHandler,
     ) {}
@@ -76,6 +80,22 @@ final class ApiMiddleware implements MiddlewareInterface
         // /dann-und-jetzt
         if ($route === '/dann-und-jetzt' && $method === 'GET') {
             return $this->dannUndJetztHandler->list($request);
+        }
+
+        // /spaziergaenge
+        if ($route === '/spaziergaenge' && $method === 'GET') {
+            return $this->spaziergangHandler->list($request);
+        }
+        if (preg_match('#^/spaziergaenge/(?P<id>\d+)$#', $route, $m) && $method === 'GET') {
+            return $this->spaziergangHandler->detail($request, (int)$m['id']);
+        }
+
+        // /zeitzeugen
+        if ($route === '/zeitzeugen' && $method === 'GET') {
+            return $this->zeitzeugHandler->list($request);
+        }
+        if (preg_match('#^/zeitzeugen/(?P<id>\d+)$#', $route, $m) && $method === 'GET') {
+            return $this->zeitzeugHandler->detail($request, (int)$m['id']);
         }
 
         // /fotos
